@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wisielec</title>
+</head>
+<body onload="start()">
+
+    Podaj literę <input type="text" id="guess"> <button onclick="check()">Sprawdź</button><br>
+    <img id="picture" src="img/0.jpg" alt="" style="width: 25%;"><br>
+    <span id="word"></span>
+    <script>
+        var word;
+        var mask;
+        var attempts;
+        function start() {
+            word = prompt("Podaj słowo: ");
+            mask = Array(word.length);
+            mask.fill(false);
+            attempts = 0;
+            showWord();
+        }
+        function check() {
+            let guess = document.getElementById('guess').value;
+            let found = false;
+            for(let i = 0; i<word.length; i++) {
+                if(word[i] == guess) { //litera znajduje się w zgadywanym słowie
+                    mask[i] = true;
+                    found = true;
+                }
+                
+            }
+            if(!found) {
+                attempts++;
+                document.getElementById("picture").src = "img/"+attempts+".jpg";
+                if(attempts > 5) alert("Przegrałeś!");
+            }
+            
+            showWord();
+        }
+        function showWord() {
+            let maskedWord = "";
+            for(let i = 0; i < word.length; i++) {
+                if(mask[i])
+                    maskedWord += word[i];
+                else
+                    maskedWord += "_";
+            }
+            //console.log(maskedWord);
+            document.getElementById("word").innerHTML = maskedWord;
+            if(mask.indexOf(false) == -1) 
+                alert("Gratulacje - wygrałeś!");
+        }
+    </script>
+</body>
+</html>
